@@ -1,0 +1,52 @@
+# Record-And-Share-Code
+记录、分享代码
+
+#合并两张Excel表
+
+import pandas as pd
+
+import os
+
+path= r'D://test-e'
+
+excel_list = [f for f in os.listdir(path) if f.endswith('.xlsx')]
+
+files = [os.path.join(path, f) for f in excel_list]
+
+for i in range(0,len(files)):
+
+    data = pd.DataFrame(pd.read_excel(files[i]))
+    
+    data1 = data.loc[:,["ID","姓名","年龄","薪资"]]
+    
+    data1 = data1[data1["ID"].notnull()]
+    
+    if i==0:
+    
+        data_all = data1
+        
+    else:
+    
+        data_all = pd.concat([data_all,data1],axis=0)
+
+data_all.to_excel(r'D://test-e//汇总.xlsx',index=False)    #为之后读取Excel时不会出现Unnamed的无用标签
+
+#处理Excel表单
+
+import pandas as pd
+
+df=pd.read_excel('D://test-e//汇总.xlsx')
+
+df=df.loc[:,:]
+
+print(df)
+
+df_group=df.groupby(["ID","姓名","年龄"]).sum().loc[ :, : "薪资"]   #用分组的方式，将ID，姓名，年龄作为标签固定不变，然后对薪资进行加减运算。
+
+print(df_group)    #输出检测
+
+df_group.to_excel("D://test-e//汇总2.xlsx")   #保存表单
+
+df2=pd.read_excel("D://test-e//汇总2.xlsx")   #对表单进行检验
+
+print(df2)      #凭空出现一行0-n是pandas库默认的标签值，在保存时，只需将index=False即可。
