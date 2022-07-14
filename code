@@ -37,7 +37,7 @@ import pandas as pd
 
 df=pd.read_excel('D://test-e//汇总.xlsx')
 
-df=df.loc[:,:]
+df=df.loc[:,:]    #用loc()读取表中所有的内容
 
 print(df)
 
