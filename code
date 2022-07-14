@@ -7,7 +7,7 @@ import pandas as pd
 
 import os
 
-path= r'D://test-e'
+path= r'D://test-e'   #设置文件读取、保存路径（两张表放在同一路径下）
 
 excel_list = [f for f in os.listdir(path) if f.endswith('.xlsx')]
 
